@@ -1,0 +1,24 @@
+﻿@using Complimentree.Models;
+
+<h3>TreeDisplay</h3>
+
+<h3>@tree.Name</h3>
+<p>Species: @tree.Species</p>
+<p>Location: @tree.Location.Latitude, @tree.Location.Longitude</p>
+<p>Size: @tree.Size</p>
+<p>Compliments: </p>
+<ul>
+    @foreach (var compliment in @tree.Compliments)
+    {
+        <li>@compliment.Text</li>
+    }
+</ul>
+<label>
+    Enter a custom compliment or press the button for a random compliment:
+</label>
+<br />
+
+@code {
+    [Parameter]
+    public Tree tree { get; set; }
+}
