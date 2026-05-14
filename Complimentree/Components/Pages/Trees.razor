@@ -1,0 +1,56 @@
+﻿@rendermode InteractiveServer
+<h2>Trees</h2>
+
+<ul>
+    @foreach (var tree in trees)
+    {
+        <li>
+            <h3>@tree.Name</h3>
+            <p>Species: @tree.Species</p>
+            <p>Location: @tree.Location.Latitude, @tree.Location.Longitude</p>
+            <p>Size: @tree.Size</p>
+            <p>Compliments: </p>
+            <ul>
+                @foreach (var compliment in @tree.Compliments)
+                    {
+                        <li>@compliment.Text</li>
+                    }
+            </ul>
+            <button @onclick="() => AddCompliment(tree)">Add Compliment</button>
+            
+        </li>
+    }
+
+</ul>
+
+@code {
+@using Complimentree.Models
+    List<Tree> trees = new List<Tree>
+    {new Tree{
+        Id = 1, Name = "Harry Kane", Location = new Location{Latitude = 1,Longitude = 2}, Size = 25, Species = "Oak", Compliments = new List<Compliment>{new Compliment{Id =1, Text = "Test Nice Tree"}}
+    },
+    new Tree
+    {
+        Id = 1, Name = "Aurellio Gomez", Location = new Location{Latitude = 5,Longitude = 22}, Size = 25, Species = "Willow", Compliments = new List<Compliment>()
+    },
+    new Tree
+    {
+        Id = 1, Name = "Ian Rush", Location = new Location{Latitude = 9,Longitude = 12}, Size = 25, Species = "Birch", Compliments = new List<Compliment>()
+    },
+    new Tree
+    {
+        Id = 1, Name = "King Kenny", Location = new Location{Latitude = 100,Longitude = 253}, Size = 25, Species = "Monkey Tree", Compliments = new List<Compliment>()
+    },
+    new Tree
+    {
+        Id = 1, Name = "James", Location = new Location{Latitude = 19090,Longitude = 245}, Size = 25, Species = "Palm", Compliments = new List<Compliment>()
+    }
+    }; 
+
+    public void AddCompliment(Tree tree)
+    {
+        Compliment newCompliment = Compliment.GetCompliment();
+        tree.Compliments.Add(newCompliment);
+        
+    }
+}
