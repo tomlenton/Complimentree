@@ -5,27 +5,9 @@
     @foreach (var tree in trees)
     {
         <li>
-            <h3>@tree.Name</h3>
-            <p>Species: @tree.Species</p>
-            <p>Location: @tree.Location.Latitude, @tree.Location.Longitude</p>
-            <p>Size: @tree.Size</p>
-            <p>Compliments: </p>
-            <ul>
-                @foreach (var compliment in @tree.Compliments)
-                    {
-                        <li>@compliment.Text</li>
-                    }
-            </ul>
-            <button @onclick="() => AddCompliment(tree)">Add Compliment</button>
-            <br />
-
-            <label>
-                Enter a custom compliment:
-            </label>
-            <br />
-            <input @bind= "customCompliment"/>
+            <TreeDisplay tree="tree" />
+            <input @bind="customCompliment" />
             <button @onclick="() => PostCompliment(tree.Id)">Post Compliment</button>
-
         </li>
     }
 
@@ -57,12 +39,12 @@
     }
     }; 
 
-    public void AddCompliment(Tree tree)
-    {
-        Compliment newCompliment = Compliment.GetCompliment();
-        tree.Compliments.Add(newCompliment);
+    // public void AddCompliment(Tree tree)
+    // {
+    //     Compliment newCompliment = Compliment.GetCompliment();
+    //     tree.Compliments.Add(newCompliment);
 
-    }
+    // }
     public void PostCompliment(int id)
     {
         var selectedTree = trees.FirstOrDefault(t => t.Id == id);
@@ -71,6 +53,11 @@
             Random rnd = new Random();
             int complimentId = rnd.Next(10000);
             selectedTree.Compliments.Add(new Compliment { Id = complimentId, Text = customCompliment });
+        }
+        else
+        {
+        Compliment newCompliment = Compliment.GetCompliment();
+        selectedTree.Compliments.Add(newCompliment);
         }
 
         customCompliment = "";
