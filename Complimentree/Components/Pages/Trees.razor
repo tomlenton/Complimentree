@@ -17,13 +17,23 @@
                     }
             </ul>
             <button @onclick="() => AddCompliment(tree)">Add Compliment</button>
-            
+            <br />
+
+            <label>
+                Enter a custom compliment:
+            </label>
+            <br />
+            <input @bind= "customCompliment"/>
+            <button @onclick="() => PostCompliment(tree.Id)">Post Compliment</button>
+
         </li>
     }
 
 </ul>
 
 @code {
+    string customCompliment = "";
+
 @using Complimentree.Models
     List<Tree> trees = new List<Tree>
     {new Tree{
@@ -31,19 +41,19 @@
     },
     new Tree
     {
-        Id = 1, Name = "Aurellio Gomez", Location = new Location{Latitude = 5,Longitude = 22}, Size = 25, Species = "Willow", Compliments = new List<Compliment>()
+        Id = 2, Name = "Aurellio Gomez", Location = new Location{Latitude = 5,Longitude = 22}, Size = 25, Species = "Willow", Compliments = new List<Compliment>()
     },
     new Tree
     {
-        Id = 1, Name = "Ian Rush", Location = new Location{Latitude = 9,Longitude = 12}, Size = 25, Species = "Birch", Compliments = new List<Compliment>()
+        Id = 3, Name = "Ian Rush", Location = new Location{Latitude = 9,Longitude = 12}, Size = 25, Species = "Birch", Compliments = new List<Compliment>()
     },
     new Tree
     {
-        Id = 1, Name = "King Kenny", Location = new Location{Latitude = 100,Longitude = 253}, Size = 25, Species = "Monkey Tree", Compliments = new List<Compliment>()
+        Id = 4, Name = "King Kenny", Location = new Location{Latitude = 100,Longitude = 253}, Size = 25, Species = "Monkey Tree", Compliments = new List<Compliment>()
     },
     new Tree
     {
-        Id = 1, Name = "James", Location = new Location{Latitude = 19090,Longitude = 245}, Size = 25, Species = "Palm", Compliments = new List<Compliment>()
+        Id = 5, Name = "James", Location = new Location{Latitude = 19090,Longitude = 245}, Size = 25, Species = "Palm", Compliments = new List<Compliment>()
     }
     }; 
 
@@ -51,6 +61,19 @@
     {
         Compliment newCompliment = Compliment.GetCompliment();
         tree.Compliments.Add(newCompliment);
-        
+
+    }
+    public void PostCompliment(int id)
+    {
+        var selectedTree = trees.FirstOrDefault(t => t.Id == id);
+        if (!string.IsNullOrWhiteSpace(customCompliment))
+        {
+            Random rnd = new Random();
+            int complimentId = rnd.Next(10000);
+            selectedTree.Compliments.Add(new Compliment { Id = complimentId, Text = customCompliment });
+        }
+
+        customCompliment = "";
+
     }
 }
